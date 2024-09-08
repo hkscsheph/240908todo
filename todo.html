@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODO App</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      h1 {
+        text-align: center;
+      }
+      #todoForm {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+      #todoInput {
+        width: 300px;
+        padding: 10px;
+      }
+      #addButton {
+        padding: 10px 15px;
+      }
+      #todoList {
+        list-style-type: none;
+        padding: 0;
+      }
+      .todo-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        border: 1px solid #ccc;
+        margin-bottom: 5px;
+      }
+      .deleteButton {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="greeting">My TODO App</h1>
+    <div id="todoForm">
+      <input type="text" id="todoInput" placeholder="Add a new task" required />
+      <button id="addButton">Add</button>
+    </div>
+    <ul id="todoList"></ul>
+
+    <script>
+      const username = localStorage.getItem('username');
+      document.getElementById(
+        'greeting'
+      ).textContent = `${username}'s TODO App`;
+
+      document
+        .getElementById('addButton')
+        .addEventListener('click', function () {
+          const input = document.getElementById('todoInput');
+          const todoText = input.value.trim();
+
+          if (todoText) {
+            addTodoItem(todoText);
+            input.value = ''; // 清空輸入框
+          }
+        });
+
+      function addTodoItem(text) {
+        const todoList = document.getElementById('todoList');
+        const listItem = document.createElement('li');
+        listItem.className = 'todo-item';
+
+        listItem.innerHTML = `
+                <span>${text}</span>
+                <button class="deleteButton">Delete</button>
+            `;
+
+        listItem
+          .querySelector('.deleteButton')
+          .addEventListener('click', function () {
+            todoList.removeChild(listItem);
+          });
+
+        todoList.appendChild(listItem);
+      }
+    </script>
+  </body>
+</html>
